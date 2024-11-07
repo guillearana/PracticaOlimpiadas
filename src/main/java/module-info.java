@@ -14,7 +14,7 @@ module es.guillearana.proyecto1 {
     opens es.guillearana.proyecto1.model to javafx.base;
     opens es.guillearana.proyecto1.dao to javafx.base;
 
-    exports es.guillearana.proyecto1.idioma;
+    exports css.idioma;
     exports es.guillearana.proyecto1;
     exports es.guillearana.proyecto1.controllers;
     exports es.guillearana.proyecto1.model;
