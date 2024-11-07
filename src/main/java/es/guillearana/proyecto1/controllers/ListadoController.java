@@ -442,7 +442,7 @@ public class ListadoController {
         try {
             // Abre la ventana para añadir un nuevo Deportista
             Stage primaryStage = new Stage();
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirDeportista.fxml"));
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/es.guillearana/proyecto1/aniadirDeportista.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setTitle("AÑADIR DEPORTISTA");
             primaryStage.setScene(scene);
@@ -484,7 +484,7 @@ public class ListadoController {
         try {
             // Abre la ventana para añadir un nuevo Deporte
             Stage primaryStage = new Stage();
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirDeporte.fxml"));
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/es.guillearana/proyecto1/aniadirDeporte.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setTitle("AÑADIR DEPORTE");
             primaryStage.setScene(scene);
@@ -530,7 +530,7 @@ public class ListadoController {
         try {
             // Abre la ventana para añadir un nuevo Evento
             Stage primaryStage = new Stage();
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirEvento.fxml"));
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/es.guillearana/proyecto1/aniadirEvento.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setTitle("AÑADIR EVENTO");
             primaryStage.setScene(scene);
@@ -574,7 +574,7 @@ public class ListadoController {
         try {
             // Abre la ventana para añadir un nuevo Equipo
             Stage primaryStage = new Stage();
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirEquipo.fxml"));
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/es.guillearana/proyecto1/aniadirEquipo.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setTitle("AÑADIR EQUIPO");
             primaryStage.setScene(scene);
@@ -635,7 +635,7 @@ public class ListadoController {
         try {
             // Abre la ventana para añadir una Olimpiada
             Stage primaryStage = new Stage();
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirOlimpiada.fxml"));
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/es.guillearana/proyecto1/aniadirOlimpiada.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setTitle("AÑADIR OLIMPIADA");
             primaryStage.setScene(scene);
@@ -683,7 +683,7 @@ public class ListadoController {
         try {
             // Abre la ventana para añadir una Participacion
             Stage primaryStage = new Stage();
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/aniadirParticipacion.fxml"));
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/es.guillearana/proyecto1/aniadirParticipacion.fxml"));
             Scene scene = new Scene(root);
             primaryStage.setTitle("AÑADIR PARTICIPACION");
             primaryStage.setScene(scene);

@@ -8,13 +8,16 @@ module es.guillearana.proyecto1 {
     requires javafx.graphics;
     requires javafx.base;
     requires java.sql;
-    requires org.kordamp.ikonli.core;
-    requires org.kordamp.ikonli.javafx;
-    requires org.kordamp.ikonli.fontawesome5;
 
+    opens es.guillearana.proyecto1 to javafx.graphics, javafx.fxml;
+    opens es.guillearana.proyecto1.controllers to javafx.graphics, javafx.fxml;
+    opens es.guillearana.proyecto1.model to javafx.base;
+    opens es.guillearana.proyecto1.dao to javafx.base;
 
-    opens application to javafx.graphics, javafx.fxml;
-    opens controllers to javafx.graphics, javafx.fxml;
-    opens model to javafx.base;
-    opens dao to javafx.base;
+    exports es.guillearana.proyecto1.idioma;
+    exports es.guillearana.proyecto1;
+    exports es.guillearana.proyecto1.controllers;
+    exports es.guillearana.proyecto1.model;
+    exports es.guillearana.proyecto1.dao;
+
 }

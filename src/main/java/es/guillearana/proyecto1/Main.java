@@ -23,14 +23,14 @@ public class Main extends Application {
             Locale.setDefault(new Locale(idioma, region));
 
             // Cargar los recursos de idioma
-            ResourceBundle bundle = ResourceBundle.getBundle("idiomas/messages");
+            ResourceBundle bundle = ResourceBundle.getBundle("es/guillearana/proyecto1/idiomas/messages");
 
             // Cargar la interfaz de usuario desde un archivo FXML
-            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/fxml/Listado.fxml"), bundle);
+            GridPane root = (GridPane)FXMLLoader.load(getClass().getResource("/es.guillearana/proyecto1/Listado.fxml"), bundle);
 
             // Crear la escena y agregar hojas de estilo
             Scene scene = new Scene(root);
-            scene.getStylesheets().add(getClass().getResource("/css/estilos.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/es.guillearana/proyecto1/css/estilos.css").toExternalForm());
 
             // Establecer el título de la ventana principal usando la configuración de idioma
             primaryStage.setTitle(bundle.getString("titulo"));
