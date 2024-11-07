@@ -38,7 +38,12 @@ public class EditarDeportistaController {
     @FXML
     private Button btnCancelar;
 
-
+    /**
+     * Método que inicializa la ventana emergente para editar los detalles de un deportista.
+     * Asigna los valores actuales del deportista a los campos de texto correspondientes.
+     *
+     * @param d Deportista que se desea editar.
+     */
     public void editarDeportista(Deportista d) {
         this.deportista = d;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
@@ -50,7 +55,7 @@ public class EditarDeportistaController {
         // Creamos un contenedor VBox como raíz de la ventana emergente
         VBox contenedorRaiz = new VBox();
 
-        // Creamos contenedores HBox para cada campo de entrada (Nombre, Apellidos, Edad)
+        // Creamos contenedores HBox para cada campo de entrada (Nombre, Sexo, Peso, Altura)
         HBox contenedorNombre = new HBox();
         HBox contenedorSexo = new HBox();
         HBox contenedorPeso = new HBox();
@@ -62,7 +67,7 @@ public class EditarDeportistaController {
         contenedorPeso.setSpacing(10);
         contenedorAltura.setSpacing(10);
 
-        // le damos valor a los TextFields
+        // Le damos valor a los TextFields
         tfNombre = new TextField();
         tfNombre.setText(d.getNombre());
 
@@ -114,6 +119,12 @@ public class EditarDeportistaController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Guardar".
+     * Valida los campos y guarda los cambios realizados en el deportista.
+     *
+     * @param event Evento generado al hacer clic en el botón "Guardar".
+     */
     void modificar(ActionEvent event) {
         // Antes de modificar, validamos que los campos de entrada no contengan errores
         String errores = validarCampos();
@@ -140,7 +151,12 @@ public class EditarDeportistaController {
         }
     }
 
-    // Este método valida los campos de entrada y retorna los errores como una cadena
+    /**
+     * Método que valida los campos de entrada.
+     * Retorna una cadena con los errores encontrados durante la validación.
+     *
+     * @return Cadena con los errores de validación (si existen).
+     */
     private String validarCampos() {
         String errores = "";
 
@@ -177,6 +193,12 @@ public class EditarDeportistaController {
         return errores;
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Cancelar".
+     * Cierra la ventana emergente sin guardar los cambios.
+     *
+     * @param event Evento generado al hacer clic en el botón "Cancelar".
+     */
     @FXML
     void accionCancelar(ActionEvent event) {
         // Cierra la ventana actual al hacer clic en el botón Cancelar
@@ -184,7 +206,11 @@ public class EditarDeportistaController {
         stage.close();
     }
 
-    // Metodos de diferentes ventanas emergentes
+    /**
+     * Muestra una ventana emergente de alerta con el mensaje de error.
+     *
+     * @param mensaje Mensaje de error a mostrar en la alerta.
+     */
     private void alertaError(String mensaje) {
         // Alerta de error con boton
         Alert ventanaEmergente = new Alert(AlertType.ERROR);
@@ -197,6 +223,11 @@ public class EditarDeportistaController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Muestra una ventana emergente de información con el mensaje proporcionado.
+     *
+     * @param mensaje Mensaje de información a mostrar en la alerta.
+     */
     private void alertaInformacion(String mensaje) {
         // Alerta de informacion con boton
         Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
@@ -208,5 +239,4 @@ public class EditarDeportistaController {
         });
         ventanaEmergente.show();
     }
-
 }

@@ -20,6 +20,10 @@ import es.guillearana.proyecto1.model.Deporte;
 import es.guillearana.proyecto1.model.Evento;
 import es.guillearana.proyecto1.model.Olimpiada;
 
+/**
+ * Controlador para la edición de eventos en la aplicación.
+ * Esta clase maneja la lógica de la ventana emergente que permite modificar los detalles de un evento.
+ */
 public class EditarEventoController {
     private Evento evento;
 
@@ -41,23 +45,28 @@ public class EditarEventoController {
     @FXML
     private Button btnCancelar;
 
+    // ComboBoxes para seleccionar la Olimpiada y el Deporte
     ComboBox<Olimpiada> cbOlimpiadas;
 
     ComboBox<Deporte> cbDeportes;
 
-
+    /**
+     * Método para inicializar la ventana emergente para editar un evento.
+     * Se configura la ventana con los datos actuales del evento y se preparan los ComboBoxes con las opciones disponibles.
+     * @param evento El evento que se va a editar.
+     */
     public void editarEvento(Evento evento) {
         this.evento = evento;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
         ventanaEmergente = new Stage();
 
-        // Le ponemos titulo a la ventana
+        // Le ponemos título a la ventana
         ventanaEmergente.setTitle("MODIFICAR EVENTO");
 
         // Creamos un contenedor VBox como raíz de la ventana emergente
         VBox contenedorRaiz = new VBox();
 
-        // Creamos contenedores HBox para cada campo de entrada (Nombre, Apellidos, Edad)
+        // Creamos contenedores HBox para cada campo de entrada (Nombre, Olimpiada, Deporte)
         HBox contenedorNombre = new HBox();
         HBox contenedorOlimpiada = new HBox();
         HBox contenedorDeporte = new HBox();
@@ -67,11 +76,11 @@ public class EditarEventoController {
         contenedorOlimpiada.setSpacing(10);
         contenedorDeporte.setSpacing(10);
 
-        // le damos valor a los TextFields
+        // Asignamos los valores actuales del evento a los campos de texto
         tfNombre = new TextField();
         tfNombre.setText(evento.getNombre());
 
-        // hacemos dos combos para Olimpiadas y Deportes
+        // Cargamos las Olimpiadas y Deportes desde la base de datos
         OlimpiadasDao olimpiadasDao = new OlimpiadasDao();
         ObservableList<Olimpiada> listaOlimpiadas =  olimpiadasDao.cargarOlimpiadas("");
         cbOlimpiadas = new ComboBox<>();
@@ -82,7 +91,7 @@ public class EditarEventoController {
         cbDeportes = new ComboBox<>();
         cbDeportes.setItems(listaDeportes);
 
-        // Añadimos los labels al contenedor
+        // Añadimos los labels y campos a sus contenedores
         contenedorNombre.getChildren().addAll(new javafx.scene.control.Label("Nombre"), tfNombre);
         contenedorOlimpiada.getChildren().addAll(new javafx.scene.control.Label("Olimpiada"), cbOlimpiadas);
         contenedorDeporte.getChildren().addAll(new javafx.scene.control.Label("Deporte"), cbDeportes);
@@ -120,6 +129,11 @@ public class EditarEventoController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Método que maneja la acción de guardar los cambios del evento editado.
+     * Realiza la validación de los campos y actualiza el evento en la base de datos si no hay errores.
+     * @param event El evento generado por el botón "Guardar".
+     */
     void modificar(ActionEvent event) {
         // Antes de modificar, validamos que los campos de entrada no contengan errores
         String errores = validarCampos();
@@ -127,17 +141,20 @@ public class EditarEventoController {
         if (errores.isEmpty()) {
             try {
                 EventosDao eventosDao = new EventosDao();
-                // Le ponemos los datos nuevos al deportista
+                // Le asignamos los nuevos valores al evento
                 evento.setNombre(this.tfNombre.getText().toString());
                 evento.setId_olimpiada(this.cbOlimpiadas.getSelectionModel().getSelectedItem().getId_olimpiada());
                 evento.setId_deporte(this.cbDeportes.getSelectionModel().getSelectedItem().getId_deporte());
 
+                // Actualizamos el evento en la base de datos
                 eventosDao.editarEvento(evento);
 
+                // Cerramos la ventana emergente
                 ventanaEmergente.close();
+                // Mostramos un mensaje de éxito
                 alertaInformacion("Se ha modificado el Evento seleccionado\nActualiza la tabla para ver los cambios");
             } catch (Exception e) {
-                // Manejamos cualquier excepción que pueda ocurrir, aunque no se realiza ninguna acción específica en caso de error
+                // Manejamos cualquier excepción que pueda ocurrir
             }
         } else {
             // Mostramos una alerta de error con los mensajes de error
@@ -145,18 +162,24 @@ public class EditarEventoController {
         }
     }
 
-    // Este método valida los campos de entrada y retorna los errores como una cadena
+    /**
+     * Método que valida los campos de entrada (Nombre, Olimpiada y Deporte).
+     * @return Un String con los errores encontrados en los campos.
+     */
     private String validarCampos() {
         String errores = "";
 
+        // Validación de campo Nombre
         if(tfNombre.getText().isEmpty()) {
-            errores += "Tienes que rellenar el campo Peso\n";
+            errores += "Tienes que rellenar el campo Nombre\n";
         }
 
+        // Validación de Olimpiada seleccionada
         if(this.cbOlimpiadas.getSelectionModel().getSelectedItem() == null) {
             errores += "Tienes que seleccionar una Olimpiada\n";
         }
 
+        // Validación de Deporte seleccionado
         if(this.cbDeportes.getSelectionModel().getSelectedItem() == null) {
             errores += "Tienes que seleccionar un Deporte\n";
         }
@@ -164,6 +187,10 @@ public class EditarEventoController {
         return errores;
     }
 
+    /**
+     * Método que maneja la acción del botón Cancelar para cerrar la ventana emergente.
+     * @param event El evento generado por el botón "Cancelar".
+     */
     @FXML
     void accionCancelar(ActionEvent event) {
         // Cierra la ventana actual al hacer clic en el botón Cancelar
@@ -171,9 +198,12 @@ public class EditarEventoController {
         stage.close();
     }
 
-    // Metodos de diferentes ventanas emergentes
+    /**
+     * Método que muestra una ventana emergente de alerta con el mensaje de error.
+     * @param mensaje El mensaje que se mostrará en la ventana de error.
+     */
     private void alertaError(String mensaje) {
-        // Alerta de error con boton
+        // Alerta de error con botón
         Alert ventanaEmergente = new Alert(AlertType.ERROR);
         ventanaEmergente.setTitle("info");
         ventanaEmergente.setContentText(mensaje);
@@ -184,8 +214,12 @@ public class EditarEventoController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Método que muestra una ventana emergente de información con el mensaje proporcionado.
+     * @param mensaje El mensaje que se mostrará en la ventana de información.
+     */
     private void alertaInformacion(String mensaje) {
-        // Alerta de informacion con boton
+        // Alerta de información con botón
         Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
         ventanaEmergente.setTitle("info");
         ventanaEmergente.setContentText(mensaje);
@@ -195,5 +229,4 @@ public class EditarEventoController {
         });
         ventanaEmergente.show();
     }
-
 }

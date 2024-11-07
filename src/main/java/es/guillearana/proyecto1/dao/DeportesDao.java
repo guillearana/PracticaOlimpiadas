@@ -8,9 +8,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import es.guillearana.proyecto1.model.Deporte;
 
+/**
+ * Clase que gestiona las operaciones relacionadas con los deportes en la base de datos.
+ */
 public class DeportesDao {
     private ConexionBD conexion;
 
+    /**
+     * Añade un nuevo deporte a la base de datos.
+     *
+     * @param a El objeto Deporte que se va a añadir.
+     */
     public void aniadirDeporte(Deporte a) {
         try {
             conexion = new ConexionBD();
@@ -26,6 +34,12 @@ public class DeportesDao {
         }
     }
 
+    /**
+     * Carga los deportes de la base de datos que coinciden con la cadena de búsqueda.
+     *
+     * @param cadena Cadena que se utiliza para filtrar los deportes por nombre.
+     * @return Una lista observable de deportes que coinciden con la búsqueda.
+     */
     public ObservableList<Deporte> cargarDeportes(String cadena)  {
         ObservableList<Deporte> listaDeportes = FXCollections.observableArrayList();
         try {
@@ -57,6 +71,11 @@ public class DeportesDao {
         return listaDeportes;
     }
 
+    /**
+     * Borra un deporte de la base de datos, incluyendo las participaciones y eventos asociados.
+     *
+     * @param a El objeto Deporte que se va a eliminar.
+     */
     public void borrarDeporte(Deporte a) {
         try {
             conexion = new ConexionBD();
@@ -76,14 +95,17 @@ public class DeportesDao {
             pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
 
-
-
             conexion.closeConexion();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Edita los detalles de un deporte en la base de datos.
+     *
+     * @param a El objeto Deporte con los nuevos datos.
+     */
     public void editarDeporte(Deporte a) {
         try {
             conexion = new ConexionBD();
@@ -101,6 +123,11 @@ public class DeportesDao {
         }
     }
 
+    /**
+     * Obtiene el último ID de deporte registrado en la base de datos.
+     *
+     * @return El siguiente ID disponible para un nuevo deporte.
+     */
     public int ultimoId() {
         try {
             conexion = new ConexionBD();

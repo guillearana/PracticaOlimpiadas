@@ -38,7 +38,11 @@ public class EditarOlimpiadaController {
     @FXML
     private Button btnCancelar;
 
-
+    /**
+     * Método que configura la ventana emergente para editar los detalles de una olimpiada.
+     *
+     * @param olimpiada La olimpiada que se va a modificar.
+     */
     public void editarOlimpiada(Olimpiada olimpiada) {
         this.olimpiada = olimpiada;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
@@ -114,6 +118,11 @@ public class EditarOlimpiadaController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Guardar". Modifica los datos de la olimpiada.
+     *
+     * @param event El evento de acción.
+     */
     void modificar(ActionEvent event) {
         // Antes de modificar, validamos que los campos de entrada no contengan errores
         String errores = validarCampos();
@@ -140,7 +149,11 @@ public class EditarOlimpiadaController {
         }
     }
 
-    // Este método valida los campos de entrada y retorna los errores como una cadena
+    /**
+     * Valida los campos de entrada y retorna una cadena con los errores encontrados.
+     *
+     * @return Los errores de validación como una cadena de texto.
+     */
     private String validarCampos() {
         String errores = "";
 
@@ -170,6 +183,11 @@ public class EditarOlimpiadaController {
         return errores;
     }
 
+    /**
+     * Método que cierra la ventana emergente cuando se hace clic en el botón "Cancelar".
+     *
+     * @param event El evento de acción.
+     */
     @FXML
     void accionCancelar(ActionEvent event) {
         // Cierra la ventana actual al hacer clic en el botón Cancelar
@@ -177,7 +195,11 @@ public class EditarOlimpiadaController {
         stage.close();
     }
 
-    // Metodos de diferentes ventanas emergentes
+    /**
+     * Muestra una alerta de tipo error con el mensaje especificado.
+     *
+     * @param mensaje El mensaje a mostrar en la alerta de error.
+     */
     private void alertaError(String mensaje) {
         // Alerta de error con boton
         Alert ventanaEmergente = new Alert(AlertType.ERROR);
@@ -190,6 +212,11 @@ public class EditarOlimpiadaController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Muestra una alerta de tipo información con el mensaje especificado.
+     *
+     * @param mensaje El mensaje a mostrar en la alerta de información.
+     */
     private void alertaInformacion(String mensaje) {
         // Alerta de informacion con boton
         Alert ventanaEmergente = new Alert(AlertType.INFORMATION);

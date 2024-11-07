@@ -8,11 +8,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import es.guillearana.proyecto1.model.Evento;
 
+/**
+ * Clase que gestiona las operaciones relacionadas con los eventos en la base de datos.
+ */
 public class EventosDao {
     private ConexionBD conexion;
 
+    /**
+     * Carga los eventos de la base de datos que coinciden con la cadena de búsqueda.
+     *
+     * @param cadena Cadena que se utiliza para filtrar los eventos por nombre.
+     * @return Una lista observable de eventos que coinciden con la búsqueda.
+     */
     public ObservableList<Evento> cargarEventos(String cadena)  {
-        ObservableList<Evento> listaEquipos = FXCollections.observableArrayList();
+        ObservableList<Evento> listaEventos = FXCollections.observableArrayList();
         try {
             conexion = new ConexionBD();
             String consulta = "select Evento.id_evento as id_evento, Evento.nombre as nombre, Olimpiada.nombre as olimpiada, Deporte.nombre as deporte "
@@ -32,24 +41,29 @@ public class EventosDao {
 
                 // Creamos el Evento
                 Evento e = new Evento(nombre, id_evento, olimpiada, deporte);
-                listaEquipos.add(e);
+                listaEventos.add(e);
             }
             rs.close();
             conexion.closeConexion();
 
-            return listaEquipos;
+            return listaEventos;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return listaEquipos;
+        return listaEventos;
     }
 
+    /**
+     * Edita los detalles de un evento en la base de datos.
+     *
+     * @param evento El objeto Evento con los nuevos datos.
+     */
     public void editarEvento(Evento evento) {
         try {
             conexion = new ConexionBD();
 
-            // editamos la tabla Deportista
+            // editamos la tabla Evento
             String consulta = "UPDATE Evento "
                     + "SET nombre = '"+evento.getNombre()+"', id_olimpiada = '"+evento.getId_olimpiada()+"', id_deporte = "+evento.getId_deporte()+" "
                     + "WHERE id_evento = "+evento.getId_evento();
@@ -62,11 +76,16 @@ public class EventosDao {
         }
     }
 
+    /**
+     * Añade un nuevo evento a la base de datos.
+     *
+     * @param evento El objeto Evento que se va a añadir.
+     */
     public void aniadirEvento(Evento evento) {
         try {
             conexion = new ConexionBD();
 
-            // añadir en la tabla de Deportistas
+            // añadir en la tabla Evento
             String consulta = "insert into Evento (nombre, id_olimpiada, id_deporte) VALUES ('"+evento.getNombre()+"',"+evento.getId_olimpiada()+","+evento.getId_deporte()+")";
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
@@ -77,17 +96,22 @@ public class EventosDao {
         }
     }
 
-    public void borrarEvento(Evento a) {
+    /**
+     * Borra un evento de la base de datos, eliminando también sus participaciones.
+     *
+     * @param evento El objeto Evento que se va a eliminar.
+     */
+    public void borrarEvento(Evento evento) {
         try {
             conexion = new ConexionBD();
 
             // borrar de la tabla Participacion
-            String consulta = "DELETE FROM Participacion WHERE id_evento = "+a.getId_evento();
+            String consulta = "DELETE FROM Participacion WHERE id_evento = "+evento.getId_evento();
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
 
             // borrar de la tabla Evento
-            consulta = "DELETE FROM Evento WHERE id_evento = "+a.getId_evento();
+            consulta = "DELETE FROM Evento WHERE id_evento = "+evento.getId_evento();
             pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
 
@@ -97,6 +121,11 @@ public class EventosDao {
         }
     }
 
+    /**
+     * Obtiene el último ID de evento registrado en la base de datos.
+     *
+     * @return El siguiente ID disponible para un nuevo evento.
+     */
     public int ultimoId() {
         try {
             conexion = new ConexionBD();

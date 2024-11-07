@@ -38,7 +38,11 @@ public class EditarParticipacionController {
     @FXML
     private Button btnCancelar;
 
-
+    /**
+     * Método que configura la ventana emergente para editar los detalles de una participación.
+     *
+     * @param participacion La participación que se va a modificar.
+     */
     public void editarParticipacion(Participacion participacion) {
         this.participacion = participacion;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
@@ -111,6 +115,11 @@ public class EditarParticipacionController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Guardar". Modifica los datos de la participación.
+     *
+     * @param event El evento de acción.
+     */
     void modificar(ActionEvent event) {
         // Antes de modificar, validamos que los campos de entrada no contengan errores
         String errores = validarCampos();
@@ -136,7 +145,11 @@ public class EditarParticipacionController {
         }
     }
 
-    // Este método valida los campos de entrada y retorna los errores como una cadena
+    /**
+     * Método que valida los campos de entrada y retorna los errores como una cadena de texto.
+     *
+     * @return Una cadena con los errores encontrados en los campos.
+     */
     private String validarCampos() {
         String errores = "";
 
@@ -155,6 +168,11 @@ public class EditarParticipacionController {
         return errores;
     }
 
+    /**
+     * Método que cierra la ventana emergente al hacer clic en el botón "Cancelar".
+     *
+     * @param event El evento de acción.
+     */
     @FXML
     void accionCancelar(ActionEvent event) {
         // Cierra la ventana actual al hacer clic en el botón Cancelar
@@ -162,7 +180,11 @@ public class EditarParticipacionController {
         stage.close();
     }
 
-    // Metodos de diferentes ventanas emergentes
+    /**
+     * Muestra una alerta de tipo error con el mensaje especificado.
+     *
+     * @param mensaje El mensaje a mostrar en la alerta de error.
+     */
     private void alertaError(String mensaje) {
         // Alerta de error con boton
         Alert ventanaEmergente = new Alert(AlertType.ERROR);
@@ -175,6 +197,11 @@ public class EditarParticipacionController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Muestra una alerta de tipo información con el mensaje especificado.
+     *
+     * @param mensaje El mensaje a mostrar en la alerta de información.
+     */
     private void alertaInformacion(String mensaje) {
         // Alerta de informacion con boton
         Alert ventanaEmergente = new Alert(AlertType.INFORMATION);

@@ -14,6 +14,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import es.guillearana.proyecto1.model.Equipo;
 
+/**
+ * Controlador para editar un equipo existente en la aplicación.
+ * Esta clase maneja la lógica de la ventana emergente que permite modificar los detalles de un equipo.
+ */
 public class EditarEquipoController {
     private Equipo equipo;
 
@@ -32,7 +36,11 @@ public class EditarEquipoController {
     @FXML
     private Button btnCancelar;
 
-
+    /**
+     * Método que abre la ventana emergente para editar un equipo.
+     * Se inicializan los campos con los valores actuales del equipo.
+     * @param equipo El equipo que se va a editar.
+     */
     public void editarEquipo(Equipo equipo) {
         this.equipo = equipo;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
@@ -96,6 +104,11 @@ public class EditarEquipoController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Método que maneja la acción de guardar los cambios del equipo editado.
+     * Realiza la validación de los campos y actualiza el equipo en la base de datos si no hay errores.
+     * @param event El evento generado por el botón "Guardar".
+     */
     void modificar(ActionEvent event) {
         // Antes de modificar, validamos que los campos de entrada no contengan errores
         String errores = validarCampos();
@@ -103,16 +116,20 @@ public class EditarEquipoController {
         if (errores.isEmpty()) {
             try {
                 EquiposDao equiposDao = new EquiposDao();
-                // Le ponemos los datos nuevos al deportista
+                // Le ponemos los datos nuevos al equipo
                 equipo.setNombre(this.tfNombre.getText().toString());
                 equipo.setIniciales(this.tfIniciales.getText().toString());
 
+                // Actualizamos el equipo en la base de datos
                 equiposDao.editarDeporte(equipo);
 
+                // Cerramos la ventana emergente
                 ventanaEmergente.close();
+                // Mostramos un mensaje de éxito
                 alertaInformacion("Se ha modificado el equipo seleccionado\nActualiza la tabla para ver los cambios");
             } catch (Exception e) {
                 // Manejamos cualquier excepción que pueda ocurrir, aunque no se realiza ninguna acción específica en caso de error
+                alertaError("Ocurrió un error al intentar modificar el equipo. Por favor, intente nuevamente.");
             }
         } else {
             // Mostramos una alerta de error con los mensajes de error
@@ -120,22 +137,32 @@ public class EditarEquipoController {
         }
     }
 
-    // Este método valida los campos de entrada y retorna los errores como una cadena
+    /**
+     * Método que valida los campos de entrada (Nombre e Iniciales).
+     * @return Un String con los errores encontrados en los campos.
+     */
     private String validarCampos() {
         String errores = "";
 
+        // Validación de campo Nombre
         if(tfNombre.getText().isEmpty()) {
             errores += "Tienes que rellenar el campo Nombre\n";
         }
+
+        // Validación de campo Iniciales
         if(tfIniciales.getText().isEmpty()) {
             errores += "Tienes que rellenar el campo Iniciales\n";
-        }else if(tfIniciales.getText().length()>3){
+        } else if(tfIniciales.getText().length() > 3) {
             errores += "Las iniciales solo pueden tener un máximo de 3 carácteres\n";
         }
 
         return errores;
     }
 
+    /**
+     * Método que maneja la acción del botón Cancelar para cerrar la ventana emergente.
+     * @param event El evento generado por el botón "Cancelar".
+     */
     @FXML
     void accionCancelar(ActionEvent event) {
         // Cierra la ventana actual al hacer clic en el botón Cancelar
@@ -143,7 +170,10 @@ public class EditarEquipoController {
         stage.close();
     }
 
-    // Metodos de diferentes ventanas emergentes
+    /**
+     * Método que muestra una ventana emergente de alerta con el mensaje de error.
+     * @param mensaje El mensaje que se mostrará en la ventana de error.
+     */
     private void alertaError(String mensaje) {
         // Alerta de error con boton
         Alert ventanaEmergente = new Alert(AlertType.ERROR);
@@ -156,6 +186,10 @@ public class EditarEquipoController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Método que muestra una ventana emergente de información con el mensaje proporcionado.
+     * @param mensaje El mensaje que se mostrará en la ventana de información.
+     */
     private void alertaInformacion(String mensaje) {
         // Alerta de informacion con boton
         Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
@@ -167,5 +201,4 @@ public class EditarEquipoController {
         });
         ventanaEmergente.show();
     }
-
 }

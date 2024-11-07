@@ -8,14 +8,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import es.guillearana.proyecto1.model.Equipo;
 
+/**
+ * Clase que gestiona las operaciones relacionadas con los equipos en la base de datos.
+ */
 public class EquiposDao {
     private ConexionBD conexion;
 
+    /**
+     * Añade un nuevo equipo a la base de datos.
+     *
+     * @param equipo El objeto Equipo que se va a añadir.
+     */
     public void aniadirEquipo(Equipo equipo) {
         try {
             conexion = new ConexionBD();
 
-            // añadir en la tabla de Deportistas
+            // añadir en la tabla de Equipos
             String consulta = "insert into Equipo (nombre, iniciales) VALUES ('"+equipo.getNombre()+"', '"+equipo.getIniciales()+"')";
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
@@ -26,11 +34,16 @@ public class EquiposDao {
         }
     }
 
+    /**
+     * Edita los detalles de un equipo en la base de datos.
+     *
+     * @param equipo El objeto Equipo con los nuevos datos.
+     */
     public void editarDeporte(Equipo equipo) {
         try {
             conexion = new ConexionBD();
 
-            // editamos la tabla Deportista
+            // editamos la tabla Equipo
             String consulta = "UPDATE Equipo "
                     + "SET nombre = '"+equipo.getNombre()+"', iniciales = '"+equipo.getIniciales()+"' "
                     + "WHERE id_equipo = "+equipo.getId_equipo();
@@ -43,6 +56,12 @@ public class EquiposDao {
         }
     }
 
+    /**
+     * Carga los equipos de la base de datos que coinciden con la cadena de búsqueda.
+     *
+     * @param cadena Cadena que se utiliza para filtrar los equipos por nombre.
+     * @return Una lista observable de equipos que coinciden con la búsqueda.
+     */
     public ObservableList<Equipo> cargarEquipos(String cadena)  {
         ObservableList<Equipo> listaEquipos = FXCollections.observableArrayList();
         try {
@@ -60,7 +79,7 @@ public class EquiposDao {
                 String nombre = rs.getString("nombre");
                 String iniciales = rs.getString("iniciales");
 
-                // Creamos el Deporte
+                // Creamos el Equipo
                 Equipo equipo = new Equipo(id, nombre, iniciales);
 
                 listaEquipos.add(equipo);
@@ -76,6 +95,11 @@ public class EquiposDao {
         return listaEquipos;
     }
 
+    /**
+     * Borra un equipo de la base de datos, eliminando también sus participaciones.
+     *
+     * @param a El objeto Equipo que se va a eliminar.
+     */
     public void borrarEquipo(Equipo a) {
         try {
             conexion = new ConexionBD();
@@ -90,14 +114,17 @@ public class EquiposDao {
             pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
 
-
-
             conexion.closeConexion();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Obtiene el último ID de equipo registrado en la base de datos.
+     *
+     * @return El siguiente ID disponible para un nuevo equipo.
+     */
     public int ultimoId() {
         try {
             conexion = new ConexionBD();

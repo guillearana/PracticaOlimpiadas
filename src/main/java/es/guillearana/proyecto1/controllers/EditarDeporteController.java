@@ -38,6 +38,12 @@ public class EditarDeporteController {
     @FXML
     private Button btnCancelar;
 
+    /**
+     * Método que inicializa la ventana emergente para editar un deporte.
+     * Se pasan los datos del deporte a los campos de texto correspondientes.
+     *
+     * @param d Objeto Deporte que se va a editar.
+     */
     public void editarDeporte(Deporte d) {
         this.deporte = d;
         // Creamos una nueva instancia de la clase Stage para la ventana emergente
@@ -95,6 +101,12 @@ public class EditarDeporteController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Guardar".
+     * Valida los campos y guarda los cambios realizados en el deporte.
+     *
+     * @param event Evento generado al hacer clic en el botón "Guardar".
+     */
     void modificar(ActionEvent event) {
         // Antes de modificar, validamos que los campos de entrada no contengan errores
         String errores = validarCampos();
@@ -118,7 +130,11 @@ public class EditarDeporteController {
         }
     }
 
-    // Este método valida los campos de entrada y retorna los errores como una cadena
+    /**
+     * Valida los campos de entrada para asegurarse de que no estén vacíos.
+     *
+     * @return Cadena con los errores de validación (si existen).
+     */
     private String validarCampos() {
         String errores = "";
 
@@ -129,6 +145,12 @@ public class EditarDeporteController {
         return errores;
     }
 
+    /**
+     * Método que se ejecuta al hacer clic en el botón "Cancelar".
+     * Cierra la ventana emergente.
+     *
+     * @param event Evento generado al hacer clic en el botón "Cancelar".
+     */
     @FXML
     void accionCancelar(ActionEvent event) {
         // Cierra la ventana actual al hacer clic en el botón Cancelar
@@ -136,7 +158,11 @@ public class EditarDeporteController {
         stage.close();
     }
 
-    // Metodos de diferentes ventanas emergentes
+    /**
+     * Muestra una ventana emergente de alerta con el mensaje de error.
+     *
+     * @param mensaje Mensaje de error a mostrar en la alerta.
+     */
     private void alertaError(String mensaje) {
         // Alerta de error con boton
         Alert ventanaEmergente = new Alert(AlertType.ERROR);
@@ -149,6 +175,11 @@ public class EditarDeporteController {
         ventanaEmergente.show();
     }
 
+    /**
+     * Muestra una ventana emergente de información con el mensaje proporcionado.
+     *
+     * @param mensaje Mensaje de información a mostrar en la alerta.
+     */
     private void alertaInformacion(String mensaje) {
         // Alerta de informacion con boton
         Alert ventanaEmergente = new Alert(AlertType.INFORMATION);
@@ -160,5 +191,4 @@ public class EditarDeporteController {
         });
         ventanaEmergente.show();
     }
-
 }

@@ -8,9 +8,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import es.guillearana.proyecto1.model.Olimpiada;
 
+/**
+ * Clase encargada de realizar las operaciones de acceso a datos para la entidad Olimpiada.
+ * Contiene métodos para cargar, añadir, editar, eliminar y obtener el último ID de una olimpiada en la base de datos.
+ */
 public class OlimpiadasDao {
     private ConexionBD conexion;
 
+    /**
+     * Carga las olimpiadas que coinciden con la cadena de búsqueda proporcionada.
+     *
+     * @param cadena La cadena utilizada para filtrar las olimpiadas a cargar.
+     * @return Una lista observable de olimpiadas que coinciden con la búsqueda.
+     */
     public ObservableList<Olimpiada> cargarOlimpiadas(String cadena)  {
         ObservableList<Olimpiada> listaOlimpiadas = FXCollections.observableArrayList();
         try {
@@ -45,6 +55,11 @@ public class OlimpiadasDao {
         return listaOlimpiadas;
     }
 
+    /**
+     * Añade una nueva olimpiada en la base de datos.
+     *
+     * @param olimpiada La olimpiada a añadir.
+     */
     public void aniadirOlimpiada(Olimpiada olimpiada) {
         try {
             conexion = new ConexionBD();
@@ -69,6 +84,11 @@ public class OlimpiadasDao {
         }
     }
 
+    /**
+     * Edita los datos de una olimpiada en la base de datos.
+     *
+     * @param olimpiada La olimpiada con los nuevos datos a actualizar.
+     */
     public void editarOlimpiada(Olimpiada olimpiada) {
         try{
             conexion = new ConexionBD();
@@ -90,26 +110,30 @@ public class OlimpiadasDao {
         }
     }
 
+    /**
+     * Elimina una olimpiada y los registros asociados a ella de la base de datos.
+     * Primero elimina las participaciones y los eventos asociados, luego elimina la olimpiada.
+     *
+     * @param a La olimpiada a eliminar.
+     */
     public void borrarOlimpiada(Olimpiada a) {
         try {
             conexion = new ConexionBD();
 
-            // borrar de la tabla Participacion
+            // Borrar de la tabla Participacion
             String consulta = "DELETE FROM Participacion WHERE id_evento IN (SELECT id_evento FROM Evento WHERE id_olimpiada = "+a.getId_olimpiada()+")";
             PreparedStatement pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
 
-            // borrar de la tabla Evento
+            // Borrar de la tabla Evento
             consulta = "DELETE FROM Evento WHERE id_olimpiada = "+ a.getId_olimpiada();
             pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
 
-            // borrar de la tabla Olimpiada
+            // Borrar de la tabla Olimpiada
             consulta = "DELETE FROM Olimpiada WHERE id_olimpiada = "+a.getId_olimpiada();
             pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
-
-
 
             conexion.closeConexion();
         } catch (SQLException e) {
@@ -117,6 +141,12 @@ public class OlimpiadasDao {
         }
     }
 
+    /**
+     * Obtiene el próximo ID disponible para insertar una nueva olimpiada.
+     * Este ID corresponde al valor máximo actual en la tabla de Olimpiada + 1.
+     *
+     * @return El próximo ID disponible.
+     */
     public int ultimoId() {
         try {
             conexion = new ConexionBD();
@@ -127,7 +157,7 @@ public class OlimpiadasDao {
             if (rs.next()) {
                 int ultimoId = rs.getInt("ID");
 
-                return ultimoId+1;
+                return ultimoId + 1;
             }
             rs.close();
             conexion.closeConexion();

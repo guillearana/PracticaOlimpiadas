@@ -8,9 +8,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import es.guillearana.proyecto1.model.Deportista;
 
+/**
+ * Clase que gestiona las operaciones relacionadas con los deportistas en la base de datos.
+ */
 public class DeportistasDao {
     private ConexionBD conexion;
 
+    /**
+     * Añade un nuevo deportista a la base de datos.
+     *
+     * @param a El objeto Deportista que se va a añadir.
+     */
     public void aniadirDeportista(Deportista a) {
         try {
             conexion = new ConexionBD();
@@ -26,6 +34,11 @@ public class DeportistasDao {
         }
     }
 
+    /**
+     * Borra un deportista de la base de datos, eliminando también sus participaciones.
+     *
+     * @param a El objeto Deportista que se va a eliminar.
+     */
     public void borrarDeportista(Deportista a) {
         try {
             conexion = new ConexionBD();
@@ -40,14 +53,17 @@ public class DeportistasDao {
             pstmt = conexion.getConexion().prepareStatement(consulta);
             pstmt.executeUpdate();
 
-
-
             conexion.closeConexion();
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * Edita los detalles de un deportista en la base de datos.
+     *
+     * @param a El objeto Deportista con los nuevos datos.
+     */
     public void editarDeportista(Deportista a) {
         try {
             conexion = new ConexionBD();
@@ -65,6 +81,12 @@ public class DeportistasDao {
         }
     }
 
+    /**
+     * Carga los deportistas de la base de datos que coinciden con la cadena de búsqueda.
+     *
+     * @param cadena Cadena que se utiliza para filtrar los deportistas por nombre.
+     * @return Una lista observable de deportistas que coinciden con la búsqueda.
+     */
     public ObservableList<Deportista> cargarDeportista(String cadena)  {
         ObservableList<Deportista> listaDeportistas = FXCollections.observableArrayList();
         try {
@@ -100,6 +122,11 @@ public class DeportistasDao {
         return listaDeportistas;
     }
 
+    /**
+     * Obtiene el último ID de deportista registrado en la base de datos.
+     *
+     * @return El siguiente ID disponible para un nuevo deportista.
+     */
     public int ultimoId() {
         try {
             conexion = new ConexionBD();
